@@ -16,7 +16,6 @@ function App() {
         <>
             {products?.map((item) => (
                 <div key={item.id}>
-                    <img src={item.images} alt="" />
                     <h2>{item.title}</h2>
                 </div>
             ))}
