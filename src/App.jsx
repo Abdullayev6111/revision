@@ -1,25 +1,21 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./Header";
+import Products from "./pages/Products.jsx";
+import Users from "./pages/Users.jsx";
+import Reciepes from "./pages/Reciepes.jsx";
+import Posts from "./pages/Posts.jsx";
 
 function App() {
-    const [products, setProducts] = useState([]);
-    useEffect(() => {
-        axios
-            .get("https://dummyjson.com/products")
-            .then((res) => setProducts(res.data.products))
-            .catch((err) => {
-                console.log(err);
-            });
-        [];
-    });
     return (
-        <>
-            {products?.map((item) => (
-                <div key={item.id}>
-                    <h2>{item.title}</h2>
-                </div>
-            ))}
-        </>
+        <BrowserRouter>
+            <Header />
+            <Routes>
+                <Route path="/" element={<Products />} />
+                <Route path="/users" element={<Users />} />
+                <Route path="/reciepes" element={<Reciepes />} />
+                <Route path="/posts" element={<Posts />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 
