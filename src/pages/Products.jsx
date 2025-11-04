@@ -8,6 +8,7 @@ import {
     Group,
     Button,
     Select,
+    Center,
     Container,
     SimpleGrid,
 } from "@mantine/core";
@@ -34,8 +35,6 @@ function Products() {
                 console.log(err.message);
             })
             .finally(() => setLoading(false));
-        const timer = setTimeout(() => setLoading(false), 1000);
-        return () => clearTimeout(timer);
     }, [page, limit]);
     return (
         <Container size="lg" mt="md">
@@ -77,39 +76,44 @@ function Products() {
                     </Button>
                 </Group>
             </Group>
-
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
-                {loading ? (
+            {loading ? (
+                <Center style={{ height: "60vh" }}>
                     <Atom
                         color="#000000"
                         size="large"
                         text="Loading..."
                         textColor=""
                     />
-                ) : (
-                    ""
-                )}
-                {products?.map((product) => (
-                    <Card shadow="md" radius="lg" withBorder key={product.id}>
-                        <Group>
-                            <Avatar
-                                src={product.images}
-                                size={60}
-                                radius="xl"
-                            />
-                            <div>
-                                <Text fw={500}>{product.title}</Text>
-                                <Text size="sm" c="dimmed">
-                                    Price: ${product.price}
-                                </Text>
-                                <Text size="sm" c="dimmed">
-                                    Warranty: {product.warrantyInformation}
-                                </Text>
-                            </div>
-                        </Group>
-                    </Card>
-                ))}
-            </SimpleGrid>
+                </Center>
+            ) : (
+                <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
+                    {products?.map((product) => (
+                        <Card
+                            shadow="md"
+                            radius="lg"
+                            withBorder
+                            key={product.id}
+                        >
+                            <Group>
+                                <Avatar
+                                    src={product.images}
+                                    size={60}
+                                    radius="xl"
+                                />
+                                <div>
+                                    <Text fw={500}>{product.title}</Text>
+                                    <Text size="sm" c="dimmed">
+                                        Price: ${product.price}
+                                    </Text>
+                                    <Text size="sm" c="dimmed">
+                                        Warranty: {product.warrantyInformation}
+                                    </Text>
+                                </div>
+                            </Group>
+                        </Card>
+                    ))}
+                </SimpleGrid>
+            )}
         </Container>
     );
 }

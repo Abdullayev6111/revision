@@ -9,6 +9,7 @@ import {
     Button,
     Group,
     Select,
+    Center,
     Container,
     SimpleGrid,
 } from "@mantine/core";
@@ -35,8 +36,6 @@ function Reciepes() {
                 console.log(err.message);
             })
             .finally(() => setLoading(false));
-        const timer = setTimeout(() => setLoading(false), 1000);
-        return () => clearTimeout(timer);
     }, [page, limit]);
     return (
         <Container size="lg" mt="md">
@@ -78,49 +77,49 @@ function Reciepes() {
                     </Button>
                 </Group>
             </Group>
-
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
-                {loading ? (
+            {loading ? (
+                <Center style={{ height: "60vh" }}>
                     <Atom
                         color="#000000"
                         size="large"
                         text="Loading..."
                         textColor=""
                     />
-                ) : (
-                    ""
-                )}
-                {reciepes?.map((reciepe) => (
-                    <Card
-                        shadow="sm"
-                        padding="lg"
-                        radius="md"
-                        withBorder
-                        key={reciepe.id}
-                    >
-                        <Card.Section>
-                            <Image
-                                src={reciepe.image}
-                                height={160}
-                                alt="Norway"
-                            />
-                        </Card.Section>
+                </Center>
+            ) : (
+                <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
+                    {reciepes?.map((reciepe) => (
+                        <Card
+                            shadow="sm"
+                            padding="lg"
+                            radius="md"
+                            withBorder
+                            key={reciepe.id}
+                        >
+                            <Card.Section>
+                                <Image
+                                    src={reciepe.image}
+                                    height={160}
+                                    alt="Norway"
+                                />
+                            </Card.Section>
 
-                        <Group justify="space-between" mt="md" mb="xs">
-                            <Text fw={500}>{reciepe.name}</Text>
-                            <Badge color="pink">{reciepe.cuisine}</Badge>
-                        </Group>
+                            <Group justify="space-between" mt="md" mb="xs">
+                                <Text fw={500}>{reciepe.name}</Text>
+                                <Badge color="pink">{reciepe.cuisine}</Badge>
+                            </Group>
 
-                        <Text size="sm" c="dimmed">
-                            Ingredients: {reciepe.ingredients.join(", ")}
-                        </Text>
+                            <Text size="sm" c="dimmed">
+                                Ingredients: {reciepe.ingredients.join(", ")}
+                            </Text>
 
-                        <Button color="blue" fullWidth mt="md" radius="md">
-                            Book classic meal for {reciepe.mealType}
-                        </Button>
-                    </Card>
-                ))}
-            </SimpleGrid>
+                            <Button color="blue" fullWidth mt="md" radius="md">
+                                Book classic meal for {reciepe.mealType}
+                            </Button>
+                        </Card>
+                    ))}
+                </SimpleGrid>
+            )}
         </Container>
     );
 }

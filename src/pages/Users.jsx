@@ -7,6 +7,7 @@ import {
     Text,
     Group,
     Button,
+    Center,
     Select,
     Container,
     SimpleGrid,
@@ -34,8 +35,6 @@ function Users() {
                 console.log(err.message);
             })
             .finally(() => setLoading(false));
-        const timer = setTimeout(() => setLoading(false), 1000);
-        return () => clearTimeout(timer);
     }, [page, limit]);
 
     return (
@@ -78,37 +77,41 @@ function Users() {
                     </Button>
                 </Group>
             </Group>
-
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
-                {loading ? (
+            {loading ? (
+                <Center style={{ height: "60vh" }}>
                     <Atom
                         color="#000000"
                         size="large"
                         text="Loading..."
                         textColor=""
                     />
-                ) : (
-                    ""
-                )}
-                {users?.map((user) => (
-                    <Card shadow="md" radius="lg" withBorder key={user.id}>
-                        <Group>
-                            <Avatar src={user.image} size={60} radius="xl" />
-                            <div>
-                                <Text fw={500}>
-                                    {user.firstName} {user.lastName}
-                                </Text>
-                                <Text size="sm" c="dimmed">
-                                    Age: {user.age}
-                                </Text>
-                                <Text size="sm" c="dimmed">
-                                    Tel: {user.phone}
-                                </Text>
-                            </div>
-                        </Group>
-                    </Card>
-                ))}
-            </SimpleGrid>
+                </Center>
+            ) : (
+                <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
+                    {users?.map((user) => (
+                        <Card shadow="md" radius="lg" withBorder key={user.id}>
+                            <Group>
+                                <Avatar
+                                    src={user.image}
+                                    size={60}
+                                    radius="xl"
+                                />
+                                <div>
+                                    <Text fw={500}>
+                                        {user.firstName} {user.lastName}
+                                    </Text>
+                                    <Text size="sm" c="dimmed">
+                                        Age: {user.age}
+                                    </Text>
+                                    <Text size="sm" c="dimmed">
+                                        Tel: {user.phone}
+                                    </Text>
+                                </div>
+                            </Group>
+                        </Card>
+                    ))}
+                </SimpleGrid>
+            )}
         </Container>
     );
 }

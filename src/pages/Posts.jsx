@@ -8,6 +8,7 @@ import {
     Group,
     Button,
     Select,
+    Center,
     Container,
     SimpleGrid,
 } from "@mantine/core";
@@ -34,8 +35,6 @@ function Posts() {
                 console.log(err.message);
             })
             .finally(() => setLoading(false));
-        const timer = setTimeout(() => setLoading(false), 1000);
-        return () => clearTimeout(timer);
     }, [page, limit]);
 
     return (
@@ -78,38 +77,38 @@ function Posts() {
                     </Button>
                 </Group>
             </Group>
-
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
-                {loading ? (
+            {loading ? (
+                <Center style={{ height: "60vh" }}>
                     <Atom
                         color="#000000"
                         size="large"
                         text="Loading..."
                         textColor=""
                     />
-                ) : (
-                    ""
-                )}
-                {posts?.map((post) => (
-                    <Card shadow="sm" padding="xl" key={post.id}>
-                        <Card.Section>
-                            <Image
-                                src={`https://picsum.photos/seed/${post.id}/800/600`}
-                                h={160}
-                                alt="No way!"
-                            />
-                        </Card.Section>
+                </Center>
+            ) : (
+                <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
+                    {posts?.map((post) => (
+                        <Card shadow="sm" padding="xl" key={post.id}>
+                            <Card.Section>
+                                <Image
+                                    src={`https://picsum.photos/seed/${post.id}/800/600`}
+                                    h={160}
+                                    alt="No way!"
+                                />
+                            </Card.Section>
 
-                        <Text fw={500} size="lg" mt="md">
-                            {post.title}
-                        </Text>
+                            <Text fw={500} size="lg" mt="md">
+                                {post.title}
+                            </Text>
 
-                        <Text mt="xs" c="dimmed" size="sm">
-                            {post.body}
-                        </Text>
-                    </Card>
-                ))}
-            </SimpleGrid>
+                            <Text mt="xs" c="dimmed" size="sm">
+                                {post.body}
+                            </Text>
+                        </Card>
+                    ))}
+                </SimpleGrid>
+            )}
         </Container>
     );
 }
