@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { MantineProvider } from "@mantine/core";
 import Header from "./Header";
 import Products from "./pages/Products.jsx";
 import Users from "./pages/Users.jsx";
 import Reciepes from "./pages/Reciepes.jsx";
 import Posts from "./pages/Posts.jsx";
-import { MantineProvider } from "@mantine/core";
+import NotFound from "./pages/NotFound.jsx";
 import "@mantine/core/styles.css";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
                     <Route path="/users" element={<Users />} />
                     <Route path="/reciepes" element={<Reciepes />} />
                     <Route path="/posts" element={<Posts />} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </MantineProvider>
         </BrowserRouter>
